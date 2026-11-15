@@ -1,0 +1,4 @@
+package-as: "!HDRShot"
+
+ignore:
+  - README.md
