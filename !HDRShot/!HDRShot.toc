@@ -1,0 +1,6 @@
+## Interface: 16001
+## Title: HDR Screenshot Fix
+## Notes: Turns HDROutput off for every Screenshot() call (keybind, macros, Narcissus) so captures aren't washed out, then restores it.
+## Version: 0.1.0
+
+!HDRShot.lua
