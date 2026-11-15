@@ -62,3 +62,8 @@ The CurseForge upload needs two things:
 
 - `## X-Curse-Project-ID: <id>` in `!HDRShot.toc`
 - a `CF_API_TOKEN` repository secret holding a CurseForge API token
+
+## License
+
+The code is under the [MIT License](LICENSE). The logo uses Blizzard's in-game
+camera icon, which the MIT License doesn't cover.
