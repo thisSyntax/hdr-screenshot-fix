@@ -4,42 +4,26 @@
 -- because Narcissus caches `local Screenshot = Screenshot` at load time
 -- (Modules/PhotoMode/PlayerModel.lua, Modules/ScreenshotTool/EmoteList.lua);
 -- it must capture our wrapper, not the original.
+--
+-- HDR is restored as soon as each capture finishes. Multi-shot captures such
+-- as Narcissus layers still work: every Screenshot() call goes through the
+-- wrapper and turns HDR off again for its own shot.
 
 local origScreenshot = Screenshot
 
--- Seconds to wait after the last screenshot before re-enabling HDR. Narcissus
--- "save layers" fires shots ~2.5s apart; keeping HDR off across the burst
--- avoids flipping the display mode for every layer.
-local RESTORE_DELAY = 4
-
 local restoreHDR = false   -- HDR was on before we turned it off
-local restoreTimer
-
-local function Restore()
-    restoreTimer = nil
-    if restoreHDR then
-        restoreHDR = false
-        SetCVar("HDROutput", "1")
-    end
-end
-
-local function ScheduleRestore()
-    if restoreTimer then restoreTimer:Cancel() end
-    restoreTimer = C_Timer.NewTimer(RESTORE_DELAY, Restore)
-end
 
 local f = CreateFrame("Frame")
 f:RegisterEvent("SCREENSHOT_SUCCEEDED")
 f:RegisterEvent("SCREENSHOT_FAILED")
 f:SetScript("OnEvent", function()
-    if restoreHDR then ScheduleRestore() end
+    if restoreHDR then
+        restoreHDR = false
+        SetCVar("HDROutput", "1")
+    end
 end)
 
 Screenshot = function(...)
-    if restoreTimer then
-        restoreTimer:Cancel()
-        restoreTimer = nil
-    end
     if GetCVar("HDROutput") ~= "0" then
         restoreHDR = true
         SetCVar("HDROutput", "0")

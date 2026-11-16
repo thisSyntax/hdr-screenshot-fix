@@ -3,3 +3,4 @@ package-as: "!HDRShot"
 ignore:
   - README.md
   - "*.png"
+  - media

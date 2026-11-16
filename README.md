@@ -1,8 +1,17 @@
 # !HDRShot: HDR screenshot fix for WoW Forever
 
+> **Only needed if you play with HDR enabled.**
+> WoW Forever has no menu option for HDR. It's turned on with the console command
+> `/console HDROutput 1`, and Windows HDR must also be on. If you haven't done that,
+> your screenshots already look correct and the addon simply does nothing.
+>
+> To turn HDR off again: `/console HDROutput 0`
+
+![Without and with !HDRShot](media/comparison-split.jpg)
+
 With `HDROutput` on, screenshots come out washed out. This addon replaces the
 global `Screenshot()` with a wrapper that turns `HDROutput` off just before the
-capture and turns it back on a few seconds after the last shot finishes.
+capture and turns it back on as soon as the shot is saved.
 
 It covers anything that calls `Screenshot()`: the Print Screen keybind,
 macros, and Narcissus photo mode, including its layer captures. HDR is only
@@ -10,9 +19,10 @@ turned back on if it was on before the shot.
 
 ## Install
 
-Download the zip from CurseForge or the GitHub releases page and extract it
-into `World of Warcraft\_forever_\Interface\AddOns\`. You should end up with
-an `AddOns\!HDRShot\` folder.
+Install it with the CurseForge app, or download the zip from CurseForge or the
+GitHub releases page and extract it into
+`World of Warcraft\_forever_\Interface\AddOns\`. You should end up with an
+`AddOns\!HDRShot\` folder.
 
 To check it's working, type `/hdrshot`. It prints the current `HDROutput`
 value and whether the wrapper is installed.
@@ -52,7 +62,7 @@ New-Item -ItemType Junction `
 
 ### Releasing
 
-Push a `v*` tag (for example `git tag v0.1.0 && git push origin v0.1.0`).
+Push a `v*` tag (for example `git tag v1.0.1 && git push origin v1.0.1`).
 GitHub Actions runs the [BigWigs packager](https://github.com/BigWigsMods/packager).
 The packager builds `!HDRShot.zip`, fills in the version from the tag,
 attaches the zip to a GitHub release and uploads it to CurseForge. The
